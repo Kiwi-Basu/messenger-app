@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
 const ChatSchema = new mongoose.Schema({
-  members : {
-    type: [String],
-  },
+  members : [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
 },
   {timestamps : true}
 

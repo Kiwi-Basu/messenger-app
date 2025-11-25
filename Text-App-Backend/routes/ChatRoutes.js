@@ -4,9 +4,16 @@ const Chat = require("../models/ChatSchema");
 const router = express.Router();
 
 
-router.post("/create", async (req, res) => {
+router.post("/chat/create", async (req, res) => {
   try {
     const { senderId, receiverId } = req.body;
+
+     if (!senderId || !receiverId) {
+      return res.status(400).json({
+        success: false,
+        message: "senderId and receiverId are required"
+      });
+    }
     const chat = await Chat.create( {
       members : [senderId, receiverId]
     })
@@ -16,15 +23,16 @@ router.post("/create", async (req, res) => {
   }
 })
 
-router.get("/:userId", async (req,res) => {
+router.get("/chat/:userId", async (req,res) => {
   
   try {
     const chats = await Chat.find({
       members : { $in : [req.params.userId]}
     })
-    res.status(200).json({message : "All chats ", success : true})
+    .populate("members","username email ")
+    res.status(200).json({message : "All chats ", success : true,data : chats})
   } catch (error) {
-    res.status(500).json({message : "server is having issues" , success : false})
+    res.status(500).json({message : "server is having issues" , success : false,error : error.message})
   }
 })
 
