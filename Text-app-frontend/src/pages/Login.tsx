@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
-import API from "../utils/api"
+import AUTHAPI from "../utils/API"
 function Login() {
   const navigate = useNavigate()
 
@@ -9,7 +9,8 @@ function Login() {
     setLoading(true)
     e.preventDefault()
     try {
-      await API.post("/login", { email, password })
+      const res = await AUTHAPI.post("/login", { email, password })
+      localStorage.setItem("token", res.data.token)
       navigate("/")
     } catch (error) {
       console.log(error)

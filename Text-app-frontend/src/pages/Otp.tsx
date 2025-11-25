@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import API from "../utils/api"
+import AUTHAPI from "../utils/API"
 import { useLocation, useNavigate } from "react-router";
 
 
@@ -18,7 +18,7 @@ function Otp() {
     e.preventDefault();
     try {
       const finalOTP = otp.join("")
-      await API.post("/verify-otp", { otp: finalOTP, email })
+      await AUTHAPI.post("/verify-otp", { otp: finalOTP, email })
       navigate("/")
 
     } catch (error) {
@@ -34,15 +34,15 @@ function Otp() {
             {otp.map((digit, i) => (
 
               <input key={i}
-              className="input-box"
+                className="input-box"
                 type="text"
-                ref={(el) => {otpRef.current[i] = el}}
+                ref={(el) => { otpRef.current[i] = el }}
                 maxLength={1}
                 value={digit}
 
-                onKeyDown={(e)=>{
-                  if(e.key=='Backspace' && i>0 && !otp[i]){
-                    otpRef.current[i-1]?.focus()
+                onKeyDown={(e) => {
+                  if (e.key == 'Backspace' && i > 0 && !otp[i]) {
+                    otpRef.current[i - 1]?.focus()
                   }
                 }}
 
@@ -55,7 +55,7 @@ function Otp() {
                   const newOtp = [...otp];
                   newOtp[i] = val;
                   setOtp(newOtp);
-    
+
                   if (val && i < otp.length - 1) {
                     otpRef.current[i + 1]?.focus();
                   }

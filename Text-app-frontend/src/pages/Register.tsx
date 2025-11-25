@@ -1,5 +1,5 @@
 import { useState } from "react"
-import API from "../utils/api"
+import AUTHAPI from "../utils/API"
 import { useNavigate } from "react-router"
 
 function Register() {
@@ -13,7 +13,7 @@ function Register() {
     e.preventDefault()
     setLoading(true)
     try {
-      const res = await API.post("/register",
+      const res = await AUTHAPI.post("/register",
         { username, email, password })
       if (res.data.success) {
         navigate("/otp", { state: { email } })

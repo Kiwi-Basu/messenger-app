@@ -1,14 +1,12 @@
 import { Route, Routes } from "react-router";
 import Register from "./pages/Register";
 import Otp from "./pages/Otp";
-import Home from "./pages/Home";
+import Home from "./pages/Chat";
 import Login from "./pages/Login";
 
 function App() {
   return (
     <div>
-      <h1>Text App</h1>
-
       <Routes>
 
          <Route path="/" element = {<Home />} />
